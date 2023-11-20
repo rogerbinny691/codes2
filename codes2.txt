@@ -1,0 +1,13 @@
+db.emp.insertOne({EID:"1",Ename:"Jon",Designation:"LeadDevelop",HIREDATE:new Date('2013-02-15'),SAL:1500})
+db.emp.find().pretty()
+db.emp.find({Designation:{$in:["Analyst","Salesman"]}},{ENAME:1,_id:0})
+db.emp.find({},{EID:1,Ename:1,Sal:1,_id:0})
+db.emp.find({Designation:{$nin:["Manager"]}},{Ename:1,_id:0})
+db.emp.find({EID:{$gt:ISODate(""),$lt:ISODate("")}},{Ename:1,_id:0})
+db.emp.distinct('DESIGNATION')
+db.customer.aggregate({$group:{_id:"$custID",Totalamount:{$sum:"$Amount"}}})
+db.customer.aggregate({$match:{"Status":"A"}},{$group:{_id:"$Custid",minamount:{$min:"$Amount"}}})
+var map=function(){emit(this.name,this.marks);};
+var reduce= function(name,marks){return Array.avg(marks);};
+db.student.mapReduce(map,reduce,{out:"AvgMarks"});
+db.AvgMarks.find();
